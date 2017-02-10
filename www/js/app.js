@@ -21,15 +21,14 @@ app.run(function($ionicPlatform) {
     }
   });
 })
-app.service('todoService', function() {
+app.service('todoService', function($http) {
   var me = this;
-  var todos = [
-    {'id': 1, 'title': 'Test1', 'completed': 'false'},
-    {'id': 2, 'title': 'Test2', 'completed': 'false'},
-    {'id': 3, 'title': 'Test3', 'completed': 'true'},
-    {'id': 4, 'title': 'Test4', 'completed': 'true'}];
+  var API = 'http://localhost:3000/'
+  var todos = $http.get(API + 'todos').then(function (res){
+    return res.data;
+  })
 
-  me.list = function() {
+  me.get = function() {
     return todos;
   }
 
@@ -40,9 +39,11 @@ app.service('todoService', function() {
 });
 
 app.controller('todoController', ['$scope', 'todoService',
-  function($scope, Todo) {
+  function($scope, todoService) {
 
-    $scope.todos = Todo.list();
+    todoService.get().then(function (res){
+      $scope.todos = res;
+    });
     $scope.addTodo = function(todo) {
       todo.completed=false;
       todoService.add(angular.copy(todo));
