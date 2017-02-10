@@ -23,31 +23,45 @@ app.run(function($ionicPlatform) {
 })
 app.service('todoService', function($http) {
   var me = this;
-  var API = 'http://localhost:3000/'
-  var todos = $http.get(API + 'todos').then(function (res){
-    return res.data;
-  })
+  var API = 'http://localhost:3000/todos'
 
   me.get = function() {
-    return todos;
+    return $http.get(API).then(function (res) {
+      return res.data;
+    })
   }
 
-  me.add = function(todo) {
-    todos.splice(0, 0, todo);
+  me.add = function (todo) {
+    return $http.post(API, todo).then(function (res) {
+    })
   }
 
+  me.edit = function (todo) {
+    return $http.put(API, todo).then(function (res) {
+    })
+  }
+
+  me.delete = function (todo) {
+    return $http.delete(API, todo).then(function (res) {
+    })
+  }
 });
 
-app.controller('todoController', ['$scope', 'todoService',
+app.controller('todoController', ['$scope', 'todoService', '$http',
   function($scope, todoService) {
 
     todoService.get().then(function (res){
       $scope.todos = res;
     });
-    $scope.addTodo = function(todo) {
-      todo.completed=false;
-      todoService.add(angular.copy(todo));
-      todo.title = '';
-    }
+
+    todoService.add().then(function (res) {
+      console.log(res)
+    });
+
+    todoService.edit().then(function (res) {
+    });
+
+    todoService.delete().then(function (res) {
+    });
   }
 ]);

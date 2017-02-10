@@ -41,7 +41,7 @@ app.put('/todos/:id', function (req, res) {
   })
 })
 app.delete('/todos/:id', function (req, res) {
-  var sql = `DELETE FROM todos where todos.is=${todos.id}`;
+  var sql = `DELETE FROM todos`;
   database.query({sql:sql}).then(function (results) {
     res.send(results)
   }).catch(function (err) {
@@ -49,22 +49,6 @@ app.delete('/todos/:id', function (req, res) {
     res.send(err);
   })
 })
-app.get('/projects', function (req, res) {
-  var sql = 'SELECT * FROM projects';
-  database.query({sql:sql}).then(function (results) {
-    res.send(results);
-  })
-})
-app.post('/projects', function (req, res) {
-  var sql = `INSERT INTO projects (title) VALUES ('${req.body.title}')`;
-  database.query({sql:sql}).then(function (results) {
-    res.send(results)
-  }).catch(function (err) {
-    res.status(500);
-    res.send(err)
-  })
-})
-
 app.listen(3000);
 
 
