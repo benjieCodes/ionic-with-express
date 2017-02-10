@@ -32,7 +32,7 @@ app.post('/todos', function (req, res) {
   })
 })
 app.put('/todos/:id', function (req, res) {
-  var sql = `INSERT INTO todos (title, completed) VALUES ('${req.body.id}', 'false')`;
+  var sql = `UPDATE todos SET (title) WHERE id = ${req.body.id}, 'false')`;
   database.query({sql:sql}).then(function (results) {
     res.send(results)
   }).catch(function (err) {
@@ -41,7 +41,7 @@ app.put('/todos/:id', function (req, res) {
   })
 })
 app.delete('/todos/:id', function (req, res) {
-  var sql = `DELETE FROM todos`;
+  var sql = `DELETE FROM todos WHERE id = ${req.params.id}`;
   database.query({sql:sql}).then(function (results) {
     res.send(results)
   }).catch(function (err) {
