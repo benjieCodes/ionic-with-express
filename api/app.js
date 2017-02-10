@@ -31,8 +31,17 @@ app.post('/todos', function (req, res) {
     res.send(err);
   })
 })
-app.post('/todos/:id', function (req, res) {
-  var sql = `INSERT INTO todos (title, completed) VALUES ('${req.body.title}', 'false')`;
+app.put('/todos/:id', function (req, res) {
+  var sql = `INSERT INTO todos (title, completed) VALUES ('${req.body.id}', 'false')`;
+  database.query({sql:sql}).then(function (results) {
+    res.send(results)
+  }).catch(function (err) {
+    res.status(500);
+    res.send(err);
+  })
+})
+app.delete('/todos/:id', function (req, res) {
+  var sql = `DELETE FROM todos where todos.is=${todos.id}`;
   database.query({sql:sql}).then(function (results) {
     res.send(results)
   }).catch(function (err) {
