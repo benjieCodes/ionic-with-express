@@ -21,61 +21,39 @@ app.run(function($ionicPlatform) {
     }
   });
 })
-app.service('todoService', function($http) {
-  var me = this;
-  var API = 'http://localhost:3000/todos'
 
-  me.get = function() {
-    return $http.get(API).then(function (res) {
-      return res.data;
-    })
-  }
 
-  me.add = function (todo) {
-    return $http.post(API, todo).then(function (res) {
-      console.log(res)
-    })
-  }
-
-  me.edit = function (todo) {
-    return $http.put(API, todo).then(function (res) {
-    })
-  }
-
-  me.delete = function (todo) {
-    return $http.delete(API, todo).then(function (res) {
-    })
-  }
-});
-
-app.controller('todoController', ['$scope', 'todoService', '$http',
-  function($scope, todoService) {
+app.controller('todoController', ['$scope', '$http',
+  function($scope, $http) {
     var me = this;
+    var API = 'http://localhost:3000/todos/'
 
     me.init = function () {
-      todoService.get().then(function (res) {
-        $scope.todos = res;
-        console.log('tasks received!');
-      });
+      return $http.get(API).then(function (res) {
+        $scope.todos = res.data;
+      })
     }
     me.init()
 
-    me.addTask = function () {
-      todoService.add().then(function (res) {
-        console.log('clicked')
-      });
+    me.addTask = function (todo) {
+      if (todo.title == '') {
+        return prompt('error')
+      }
+        return $http.post(API, todo).then(function (res) {
+          $scope.todo.title = '';
+          me.init();
+        })
     }
 
-    me.editTask = function () {
-      todoService.edit().then(function (res) {
-        console.log('clicked')
-      });
+    me.editTask = function (todo) {
+      return $http.put(API + todo, todo).then(function (res) {
+      })
     }
 
-    me.deleteTask = function () {
-      todoService.delete().then(function (res) {
-        console.log('clicked')
-      });
+    me.deleteTask = function (todo) {
+      return $http.delete(API + todo).then(function (res) {
+        me.init();
+      })
     }
   }
 ]);

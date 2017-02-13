@@ -36,22 +36,23 @@
   <ion-pane>
     <ion-header-bar class="bar">
       <div class="buttons">
-        <button class="button button-icon icon ion-minus"
-                ng-click="showDelete = !showDelete"></button>
-        <h1 class="title">Ionic Todo</h1>
+        <button class="button button-positive icon ion-close-round"
+                ng-click="showDelete = !showDelete"> <span class="showDelete">Delete Tasks</span>
+        </button>
+        <h1 class="title">Ionic Todo List (with MySQL)</h1>
       </div>
     </ion-header-bar>
-    <ion-content ng-controller="todoController">
-      <ion-list show-delete="showDelete" class="list list-editing">
+    <ion-content ng-controller="todoController as ctrl">
+      <ion-list show-delete="showDelete">
         <label class="item item-input">
           <input type="text" placeholder="New Todo" ng-model="todo.title">
         </label>
-        <button class="button button-block button-positive" ng-click="todoController.addTask()">
+        <button class="button button-block button-positive" ng-click="ctrl.addTask(todo)">
           Add
         </button>
-        <ion-item class="item item-checkbox" ng-repeat="todo in todos">
-          <ion-delete-button class="ion-minus-circled" ng-click="todoController.deleteTask()"></ion-delete-button>
-          <ion-checkbox ng-model="todo.completed" ng-checked={{todo.completed}}>{{todo.title}}</ion-checkbox>
+        <ion-item class="item" ng-repeat="todo in todos">
+          <ion-checkbox ng-model="todo.completed" ng-click="ctrl.editTask(todo)" ng-checked={{todo.completed}}>{{todo.title}}</ion-checkbox>
+          <ion-delete-button ng-model="todo.id" class="ion-minus-circled" ng-click="ctrl.deleteTask(todo.id)"></ion-delete-button>
         </ion-item>
       </ion-list>
     </ion-content>
