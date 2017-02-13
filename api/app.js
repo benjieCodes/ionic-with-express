@@ -40,7 +40,7 @@ app.put('/todos/:id', function (req, res) {
     res.send(err);
   })
 })
-app.delete('/todos/:id', function (req, res) {
+app.delete('/todos/:todo.id', function (req, res) {
   var sql = `DELETE FROM todos WHERE id ='${req.body.id}'` ;
   database.query({sql:sql}).then(function (results) {
     res.send(results)
