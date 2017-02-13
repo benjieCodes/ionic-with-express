@@ -46,7 +46,7 @@
         <label class="item item-input">
           <input type="text" placeholder="New Todo" ng-model="todo.title">
         </label>
-        <button class="button button-block button-positive" ng-click="todoController.addTask(todo.title)">
+        <button class="button button-block button-positive" ng-click="todoController.addTask()">
           Add
         </button>
         <ion-item class="item item-checkbox" ng-repeat="todo in todos">

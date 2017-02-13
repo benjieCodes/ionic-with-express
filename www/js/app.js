@@ -68,7 +68,7 @@ app.controller('todoController', ['$scope', 'todoService', '$http',
 
     me.editTask = function () {
       todoService.edit().then(function (res) {
-        console.log(res)
+        console.log('clicked')
       });
     }
 
