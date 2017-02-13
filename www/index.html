@@ -46,11 +46,11 @@
         <label class="item item-input">
           <input type="text" placeholder="New Todo" ng-model="todo.title">
         </label>
-        <button class="button button-block button-positive" ng-click="todoService.add(todo.title)">
+        <button class="button button-block button-positive" ng-click="todoController.addTask(todo.title)">
           Add
         </button>
         <ion-item class="item item-checkbox" ng-repeat="todo in todos">
-          <ion-delete-button class="ion-minus-circled" ng-click="todoService.delete(todo)"></ion-delete-button>
+          <ion-delete-button class="ion-minus-circled" ng-click="todoController.deleteTask()"></ion-delete-button>
           <ion-checkbox ng-model="todo.completed" ng-checked={{todo.completed}}>{{todo.title}}</ion-checkbox>
         </ion-item>
       </ion-list>

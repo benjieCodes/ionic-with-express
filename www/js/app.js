@@ -33,6 +33,7 @@ app.service('todoService', function($http) {
 
   me.add = function (todo) {
     return $http.post(API, todo).then(function (res) {
+      console.log(res)
     })
   }
 
@@ -49,19 +50,32 @@ app.service('todoService', function($http) {
 
 app.controller('todoController', ['$scope', 'todoService', '$http',
   function($scope, todoService) {
+    var me = this;
 
-    todoService.get().then(function (res){
-      $scope.todos = res;
-    });
+    me.init = function () {
+      todoService.get().then(function (res) {
+        $scope.todos = res;
+        console.log('tasks received!');
+      });
+    }
+    me.init()
 
-    todoService.add().then(function (res) {
-      console.log(res)
-    });
+    me.addTask = function () {
+      todoService.add().then(function (res) {
+        console.log('clicked')
+      });
+    }
 
-    todoService.edit().then(function (res) {
-    });
+    me.editTask = function () {
+      todoService.edit().then(function (res) {
+        console.log(res)
+      });
+    }
 
-    todoService.delete().then(function (res) {
-    });
+    me.deleteTask = function () {
+      todoService.delete().then(function (res) {
+        console.log('clicked')
+      });
+    }
   }
 ]);
